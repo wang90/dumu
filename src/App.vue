@@ -1,9 +1,11 @@
 <script setup>
   import { defineComponent, ref, reactive } from 'vue'
-  import { NConfigProvider, NButton,NSpace } from 'naive-ui'
+  import { NConfigProvider, NButton, NSpace } from 'naive-ui'
   import { darkTheme } from 'naive-ui'
   import TaskList from './components/TaskList.vue'
   import AddModel from './components/AddModel.vue'
+  import Layout from './components/Layout.vue'
+  import MFooter from './components/MFooter.vue'
 
   // 主题部分
   const theme = ref('darkTheme');
@@ -12,14 +14,21 @@
     showModal.value = false;
   }
 
+const __list = [
+  {
+    title: 'test',
+    value: '12313123',
+  }
+]
   // list 部分
-  const list = reactive([])
+  const list = reactive(__list)
 
   const setItemRef = ( __data ) => {
-    const { title, value } = __data;
+    const { title, value, describe } = __data;
       list.push({
         title,
         value,
+        describe,
     })
   }
 
@@ -35,16 +44,27 @@
 
 <template>
   <n-config-provider :theme="theme">
-    <n-card>
-      <n-space>
-        <n-button @click="clickModel">添加</n-button>
-        <div>showModal:{{ showModal }}</div>
-      </n-space>
-    </n-card>
-    <task-list :list="list" @delTask="delItemRef"></task-list>
+    <Layout>
+      <template v-slot:content>
+        <task-list 
+          :list="list"
+          @create="clickModel"
+          @delTask="delItemRef"></task-list>
+      </template>
+      <template v-slot:footer>
+       <m-footer></m-footer>
+      </template>
+      <template v-slot:header>
+        <div>欢乐工作开心你我
+          <n-button @click="clickModel">添加</n-button>
+        </div>
+      </template>
+      <template v-slot:sider>
+        <div>text</div>
+      </template>
+    </Layout>
     <add-model v-model:show="showModal" @addTask="setItemRef"></add-model>
   </n-config-provider>
- 
 </template>
 
 <style>

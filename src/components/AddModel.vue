@@ -1,19 +1,19 @@
 <script setup>
-import { defineEmits, defineProps, ref , watchEffect } from 'vue'
-import { NModal, NButton, NCard } from 'naive-ui';
+import { defineEmits, defineProps, ref, reactive, watchEffect } from 'vue'
+import { NModal, NButton, NCard} from 'naive-ui';
+import MFrom from './MFrom.vue';
 
 const showModal = ref( false)
 const props = defineProps({ show: false })
-
 const emit = defineEmits(); 
 
-const setItemRef = () => {
-    emit( 'addTask', 
-        {
-            'value': 'set',
-            "title": '6666',
-        }
-    )
+const setItemRef = ( __data ) => {
+    const { title, value, describe } = __data;
+    emit( 'addTask', {
+        value,
+        title,
+        describe,
+    })
     close();
 }
 const close = () => {
@@ -36,7 +36,7 @@ watchEffect(()=>{
       :bordered="false" 
       size="huge">
         <template #header>添加信息{{ showModal }}</template>
-        <n-button @click="setItemRef">添加</n-button>
+        <m-from @over="setItemRef"></m-from>
     </n-card>
   </n-modal>
 </template>
