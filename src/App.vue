@@ -26,13 +26,11 @@
   const delItemRef = ( index ) => {
     list.splice( index,1 );
   }
-
   // 添加信息部分
   const showModal = ref(false)
   const clickModel = () => {
     showModal.value = true;
   }
-
 </script>
 
 <template>

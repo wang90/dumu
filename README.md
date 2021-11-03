@@ -1,7 +1,28 @@
-# Vue 3 + Vite
+# 汪财工作台
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 为什么要做这个东东？
+- 工作&生活中有好多的账号，我存在本地的记事本上，因为不能存网盘，每次打开会如果不注意可能会删除之前的记录，复制起来也不是很方便
+- 平时都是用浏览器，基本上文件管理都在浏览器文件夹，使用起来需要查找不能分类
+- 想给自己一个好心情
 
-## Recommended IDE Setup
+## 基本原则
+所有数据都属于本地操作
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+## 功能
+### 基本功能
+- task list
+- task 创建 & 编辑
+- 
+### 未来打算
+- 日历
+- 天气
+- 
+
+## 应用相关
+### 技术架构
+vite + vue3 + naive-ui
+### 使用方法
+`````
+npm install 
+npm run dev
+`````
