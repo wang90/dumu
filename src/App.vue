@@ -1,79 +1,122 @@
-<script setup>
-  import { defineComponent, ref, reactive } from 'vue'
-  import { NConfigProvider, NButton, NSpace } from 'naive-ui'
-  import { darkTheme } from 'naive-ui'
-  import TaskList from './components/TaskList.vue'
-  import AddModel from './components/AddModel.vue'
-  import Layout from './components/Layout.vue'
-  import MFooter from './components/MFooter.vue'
-
-  // 主题部分
-  const theme = ref('darkTheme');
-
-  const info = () => {
-    showModal.value = false;
-  }
-
-const __list = [
-  {
-    title: 'test',
-    value: '12313123',
-  }
-]
-  // list 部分
-  const list = reactive(__list)
-
-  const setItemRef = ( __data ) => {
-    const { title, value, describe } = __data;
-      list.push({
-        title,
-        value,
-        describe,
-    })
-  }
-
-  const delItemRef = ( index ) => {
-    list.splice( index,1 );
-  }
-  // 添加信息部分
-  const showModal = ref(false)
-  const clickModel = () => {
-    showModal.value = true;
-  }
-</script>
-
 <template>
-  <n-config-provider :theme="theme">
-    <Layout>
-      <template v-slot:content>
-        <task-list 
-          :list="list"
-          @create="clickModel"
-          @delTask="delItemRef"></task-list>
-      </template>
-      <template v-slot:footer>
-       <m-footer></m-footer>
-      </template>
-      <template v-slot:header>
-        <div>欢乐工作开心你我
-          <n-button @click="clickModel">添加</n-button>
-        </div>
-      </template>
-      <template v-slot:sider>
-        <div>text</div>
-      </template>
-    </Layout>
-    <add-model v-model:show="showModal" @addTask="setItemRef"></add-model>
-  </n-config-provider>
+    
+    <n-config-provider :theme="theme">
+        <n-message-provider>
+        <n-dialog-provider>        
+        <n-layout position="absolute">
+            <n-layout-header bordered position="absolute" style="height: 64px; padding: 24px;">
+                <m-header @show="clickModelRef"></m-header>
+            </n-layout-header>
+            <n-layout has-sider position="absolute" style="top: 64px; bottom: 64px;">
+                <n-layout-sider
+                    collapse-mode="width"
+                    :collapsed-width="120"
+                    :width="240"
+                    show-trigger="arrow-circle"
+                    content-style="padding: 24px;"
+                    bordered>
+                    <p> text </p>
+                </n-layout-sider>
+                <n-layout-content>
+                    
+                        <task-list 
+                            :list="list"
+                            @create="clickModelRef"
+                            @saveTask="saveTaskRef"
+                            @delTask="delItemRef"></task-list>
+                </n-layout-content>
+            </n-layout>
+            <n-layout-footer position="absolute" bordered style="height: 64px; padding: 24px;">
+               <m-footer></m-footer>
+            </n-layout-footer>
+        </n-layout>
+        <add-model v-model:show="showModal" @addTask="setItemRef"></add-model>
+        </n-dialog-provider>
+        </n-message-provider>
+    </n-config-provider>
 </template>
 
+<script setup>
+    import { defineComponent, ref, reactive } from 'vue'
+    import { 
+        NSpace, NConfigProvider, NIcon, NButton,
+        NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NLayoutSider, 
+        NDialogProvider,NMessageProvider,useMessage,
+    } from 'naive-ui'
+    import { darkTheme } from 'naive-ui'
+    import TaskList from './components/TaskList.vue'
+    import AddModel from './components/AddModel.vue'
+    import MFooter from './components/MFooter.vue'
+    import MHeader from './components/MHeader.vue'
+    import { useStorage } from 'vue3-storage';
+
+
+    const storage = useStorage();
+    const __note_key = 'note_key';
+
+    // 主题部分
+    const theme = ref(darkTheme);
+
+    // default list
+    const __list = storage.getStorageSync( __note_key ) || [];
+    let list = reactive( __list );
+
+    const setItemRef = ( __data ) => {
+        const { title, value, descript } = __data;
+        list.push({
+            title,
+            value,
+            descript,
+        })
+        storage.setStorage({
+            key: __note_key,
+            data: list,
+            success: ( callback ) => {
+                console.log(callback.errMsg);
+            }
+        })
+    }
+
+    const saveTaskRef = ( __json ) => {
+        const { index ,value } = __json;
+        list[index] = value;
+        storage.setStorage({
+            key: __note_key,
+            data: list,
+            success: ( callback ) => {
+                // message.success('保存成功')
+                console.log(callback.errMsg);
+            },
+            fail: ( err ) => {
+                console.log(err);
+            }
+        })
+    }
+
+    const delItemRef = ( index ) => {
+        list.splice( index,1 );
+        storage.setStorage({
+            key: __note_key,
+            data: list,
+            success: ( callback ) => {
+                console.log(callback.errMsg);
+            }
+        });
+    }
+
+
+    // 添加信息部分
+    const showModal = ref(false)
+    const clickModelRef = () => {
+        showModal.value = true;
+    }
+</script>
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
 }
 </style>
