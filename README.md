@@ -10,9 +10,10 @@
 
 ## 功能
 ### 基本功能
-- task list
-- task 创建 & 编辑
-- 
+- <del>task list</del>
+- <del>task 创建 & 编辑 & 删除</del>
+- <del>本地存储</del>
+- json 倒入到出入
 ### 未来打算
 - 日历
 - 天气
