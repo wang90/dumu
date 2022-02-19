@@ -20,7 +20,7 @@ import { copyText } from 'vue3-clipboard'
 // props
 const props = defineProps({ value: String })
 // add msg
-const message = useMessage();
+const message = useMessage()
 // click
 const clickRef = () => {
     copyText( props.value , undefined, ( error, event ) => {

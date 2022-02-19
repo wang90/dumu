@@ -1,0 +1,1 @@
+export const NOTE_KEY = 'note_key'

@@ -22,7 +22,7 @@
 
 <script setup>
 import { defineEmits, defineProps, ref, reactive, watchEffect } from 'vue'
-import { NButton, NInput, NForm , NFormItem } from 'naive-ui';
+import { NButton, NInput, NForm , NFormItem } from 'naive-ui'
 // props
 const props = defineProps({ show: false })
 // emit
@@ -56,7 +56,7 @@ const rules = reactive({
     },
 })
 // click
-const handleValidateClick = (e) => {
+const handleValidateClick = ( e ) => {
     formRef.value.validate((errors) => {
         if (!errors) {
             emit('over', formValue )

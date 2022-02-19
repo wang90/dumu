@@ -6,7 +6,7 @@
 
 <script setup>
 import { NButton, NDialogProvider, useDialog } from 'naive-ui'
-const emit = defineEmits(['delete']);
+const emit = defineEmits(['delete'])
 // props
 const props = defineProps({ index: Number })
 // add dialog
