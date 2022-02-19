@@ -1,38 +1,127 @@
+<template>
+    <n-data-table
+        :key="( row ) => row.key"
+        :columns="columns"
+        :data="props.list"
+        :pagination="pagination"
+        row-class-name="table-row-class">
+        <template #empty>
+            <n-empty description="列表空空">
+                <template #extra>
+                    <n-button size="small"  @click="createItemRef">去添加</n-button>
+                </template>
+            </n-empty>
+        </template>
+    </n-data-table>
+</template>
+
+
 <script setup>
-import { defineProps, defineEmits } from 'vue'
-import { NButton, NList, NListItem, NThing, NResult  } from 'naive-ui'
-
-const emit = defineEmits();     // 声明触发事件 childClick
-const props = defineProps({ list: Array });   
-
+import { defineProps, h, defineEmits, reactive, ref } from 'vue'
+import { NButton, NEmpty, NInput, NDialogProvider , useMessage, NIcon, NDataTable, } from 'naive-ui'
+import CopyBtn from '/src/components/CopyBtn.vue'
+import DelBtn from '/src/components/DelBtn.vue'
+import SaveBtn from '/src/components/SaveBtn.vue'
+// emit
+const emit = defineEmits([ 'delTask', 'create', 'saveTask' ])  // 声明触发事件 childClick
+// props
+const props = defineProps({ list: Array })
+// click
 const delItemRef = ( index ) => {
     emit('delTask', index )
 }
-const createItem = () => {
-    emit('create', true )
+const createItemRef = () => {
+    emit( 'create', true )
 }
+const saveItemRef = ( index ) => {
+    const __item =  props.list[index];
+    emit( 'saveTask', {
+        index: index,
+        value: __item,
+    })
+}
+// var 
+const pagination = ref(false) 
+const columns = reactive([{
+    title: '标题',
+    key: 'title',
+    render ( row, index ) {
+        return [
+            h( NInput, {
+                value: row.title,
+                style: {
+                    width: '90%'
+                },
+                onUpdateValue( v ) {
+                    props.list[index].title = v
+                },
+            }),
+            h( CopyBtn, {
+                value: row.title,
+            }),
+        ];
+    }
+},{
+    title: '内容',
+    key: 'value',
+    render ( row, index ) {
+        return [
+            h( NInput, {
+                value: row.value,
+                style: {
+                    width: '90%'
+                },
+                onUpdateValue( v ) {
+                    props.list[index].value = v
+                },
+            }),
+            h( CopyBtn, {
+                value: row.value,
+            }),
+        ];
+    }
+},{
+    title: '补充信息',
+    key: 'descript',
+    render ( row, index ) {
+        return [
+            h( NInput, {
+                value: row.descript,
+                style: {
+                    width: '90%'
+                },
+                onUpdateValue( v ) {
+                    props.list[index].descript = v
+                },
+            }),
+            h( CopyBtn, {
+                value: row.descript,
+            }),
+
+        ]
+    },
+},
+{
+    title: 'Action',
+    key: 'actions',
+    render ( row, index ) {
+        const actions = [
+            h( SaveBtn, {
+                index: index,
+                onSave: ( index ) => {
+                    saveItemRef( index );
+                }
+            }),
+            h( DelBtn, {
+                index: index,
+                onDelete: ( index ) => {
+                    delItemRef( index );
+                }
+            }),
+        ];
+        return actions
+      }
+},])
 </script>
 
-<template>
-    <n-list>
-        <n-list-item 
-            v-for="( item, index ) in props.list" :name="index">
-            <n-thing 
-                :title="item.title" 
-                :title-extra="item.value" 
-                :description="item.descrip">
-            </n-thing>
-            <template #suffix>
-                <n-button @click="delItemRef(index)">删除</n-button>
-            </template>
-        </n-list-item>
-    </n-list>
-    <n-result v-show="props.list.length === 0" status="404" title="列表空空" description="生活总归带点荒谬">
-        <template #footer>
-            <n-button @click="createItem">去添加</n-button>
-        </template>
-    </n-result>
-</template>
 
-<style scoped>
-</style>
