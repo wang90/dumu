@@ -43,24 +43,28 @@
         NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NLayoutSider, 
         NDialogProvider,NMessageProvider,useMessage,
     } from 'naive-ui'
-    import { darkTheme } from 'naive-ui'
+    // components
     import TaskList from './components/TaskList.vue'
     import AddModel from './components/AddModel.vue'
     import MFooter from './components/MFooter.vue'
     import MHeader from './components/MHeader.vue'
-    import { useStorage } from 'vue3-storage';
+    // config
+    import { darkTheme } from 'naive-ui'
+    import { useStorage } from 'vue3-storage'
+    import { NOTE_KEY } from './config/index'
 
-
-    const storage = useStorage();
-    const __note_key = 'note_key';
+    // bind storage
+    const storage = useStorage()
+    const __note_key = NOTE_KEY
 
     // 主题部分
     const theme = ref(darkTheme);
 
     // default list
-    const __list = storage.getStorageSync( __note_key ) || [];
+    const __list = storage.getStorageSync( __note_key ) || []
     let list = reactive( __list );
 
+    // click
     const setItemRef = ( __data ) => {
         const { title, value, descript } = __data;
         list.push({
@@ -76,7 +80,6 @@
             }
         })
     }
-
     const saveTaskRef = ( __json ) => {
         const { index ,value } = __json;
         list[index] = value;
@@ -84,31 +87,28 @@
             key: __note_key,
             data: list,
             success: ( callback ) => {
-                // message.success('保存成功')
-                console.log(callback.errMsg);
+                console.log(callback.errMsg)
             },
             fail: ( err ) => {
-                console.log(err);
+                console.log(err)
             }
         })
     }
-
     const delItemRef = ( index ) => {
-        list.splice( index,1 );
+        list.splice( index, 1 )
         storage.setStorage({
             key: __note_key,
             data: list,
             success: ( callback ) => {
-                console.log(callback.errMsg);
+                console.log(callback.errMsg)
             }
         });
     }
 
-
     // 添加信息部分
     const showModal = ref(false)
     const clickModelRef = () => {
-        showModal.value = true;
+        showModal.value = true
     }
 </script>
 <style>

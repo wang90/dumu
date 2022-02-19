@@ -14,11 +14,12 @@
 <script setup>
 import { defineComponent, ref, reactive } from 'vue'
 import { NIcon, NButton } from 'naive-ui'
-import { IosAddCircle } from '@vicons/ionicons4';
-
-const emit = defineEmits(['show']); 
+import { IosAddCircle } from '@vicons/ionicons4'
+// emit
+const emit = defineEmits(['show'])
+// click
 const clickRef = () => {
-    emit('show', true);
+    emit('show', true)
 }
 
 </script>
