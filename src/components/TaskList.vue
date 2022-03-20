@@ -72,6 +72,8 @@ const columns = reactive([
                         style: {
                             width: '90%'
                         },
+                        showPasswordOn:'click',
+                        type: 'password',
                         onUpdateValue( v ) {
                             props.list[index].value = v;
                         },
@@ -89,6 +91,8 @@ const columns = reactive([
                         style: {
                             width: '90%'
                         },
+                        showPasswordOn:'click',
+                        type: 'password',
                         onUpdateValue( v ) {
                             props.list[index].value = v
                         },
