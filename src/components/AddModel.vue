@@ -26,11 +26,12 @@ const props = defineProps({ show: false })
 const emit = defineEmits(['addTask','update:show']); 
 // click
 const setItemRef = ( __data ) => {
-    const { title, value, descript } = __data
+    const { title, value, descript,type } = __data
     emit('addTask', {
         value,
         title,
         descript,
+        type,
     })
     closeRef()
 }

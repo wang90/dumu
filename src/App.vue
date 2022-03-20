@@ -18,7 +18,6 @@
                     <p> text </p>
                 </n-layout-sider>
                 <n-layout-content>
-                    
                         <task-list 
                             :list="list"
                             @create="clickModelRef"
@@ -66,17 +65,18 @@
 
     // click
     const setItemRef = ( __data ) => {
-        const { title, value, descript } = __data;
+        const { title, value, descript, type } = __data;
         list.push({
             title,
             value,
             descript,
+            type,
         })
         storage.setStorage({
             key: __note_key,
             data: list,
             success: ( callback ) => {
-                console.log(callback.errMsg);
+                console.log( callback.errMsg );
             }
         })
     }
