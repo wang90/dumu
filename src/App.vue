@@ -10,10 +10,12 @@
             <n-layout has-sider position="absolute" style="top: 64px; bottom: 64px;">
                 <n-layout-sider
                     collapse-mode="width"
-                    :collapsed-width="120"
-                    :width="240"
+                    collapsed-width="5"
+                    width="120"
                     show-trigger="arrow-circle"
                     content-style="padding: 24px;"
+                    :collapsed="collapsed"
+                    @click="updateCollapsed"
                     bordered>
                     <m-sider></m-sider>
                 </n-layout-sider>
@@ -51,11 +53,12 @@
     // config
     import { darkTheme } from 'naive-ui'
     import { useStorage } from 'vue3-storage'
-    import { NOTE_KEY } from './config/index'
+    import { NOTE_KEY, SLIDER_KEY } from './config/index'
 
     // bind storage
     const storage = useStorage()
-    const __note_key = NOTE_KEY
+    const __note_key = NOTE_KEY;
+    const __slider_key = SLIDER_KEY;
 
     // 主题部分
     const theme = ref(darkTheme);
@@ -63,6 +66,21 @@
     // default list
     const __list = storage.getStorageSync( __note_key ) || []
     let list = reactive( __list );
+
+    // default sldier collapesed;
+    const __collapsed = storage.getStorageSync( __slider_key );
+    console.log(__collapsed)
+    const collapsed = ref( __collapsed );
+    const updateCollapsed = (e) => {
+        collapsed.value = !collapsed.value;
+        storage.setStorage({
+            key: __slider_key,
+            data: collapsed.value,
+            success:() => {
+                console.log(123);
+            }
+        })
+    }
 
     // click
     const setItemRef = ( __data ) => {
