@@ -5,9 +5,7 @@
             size="small" class="link-btn">
             <template #icon>
                 <n-icon>
-                    <a :href="href" target="_blank">
-                        <ios-link></ios-Link>
-                    </a>
+                    <ios-link></ios-Link>
                 </n-icon>
             </template>
         </n-button>
@@ -20,6 +18,9 @@ import { IosLink } from '@vicons/ionicons4'
 
 // props
 const props = defineProps({ href: String })
+const clickRef = () => {
+    window.open( props.href, '_blank');
+}
 
 </script>
 <style scoped>
