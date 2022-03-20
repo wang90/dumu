@@ -15,14 +15,14 @@
                     show-trigger="arrow-circle"
                     content-style="padding: 24px;"
                     bordered>
-                    <p> text </p>
+                    <m-sider></m-sider>
                 </n-layout-sider>
                 <n-layout-content>
-                        <task-list 
-                            :list="list"
-                            @create="clickModelRef"
-                            @saveTask="saveTaskRef"
-                            @delTask="delItemRef"></task-list>
+                    <task-list 
+                        :list="list"
+                        @create="clickModelRef"
+                        @saveTask="saveTaskRef"
+                        @delTask="delItemRef"></task-list>
                 </n-layout-content>
             </n-layout>
             <n-layout-footer position="absolute" bordered style="height: 64px; padding: 24px;">
@@ -47,6 +47,7 @@
     import AddModel from './components/AddModel.vue'
     import MFooter from './components/MFooter.vue'
     import MHeader from './components/MHeader.vue'
+    import MSider from './components/MSider.vue'
     // config
     import { darkTheme } from 'naive-ui'
     import { useStorage } from 'vue3-storage'

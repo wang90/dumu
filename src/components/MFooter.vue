@@ -1,5 +1,5 @@
 <template>
-   <div>Copyright © {{ year }} wang90</div>
+   <div>Copyright © {{ year }} by wang90</div>
 </template>
 <script setup>
 import { ref } from 'vue'
