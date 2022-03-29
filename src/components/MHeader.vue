@@ -4,26 +4,48 @@
             <span>{{ datetime }}</span>
             <span>{{ timestamp }}</span>
         </div>
-        <n-button @click="clickRef" :bordered="false">
-            <template #icon>
-                <n-icon>
-                    <ios-add-circle></ios-add-circle>
-                </n-icon>
-            </template>
-        </n-button>
+        <div>
+            <n-tooltip trigger="hover">
+                <template #trigger>
+                    <n-button @click="clickAddRef" :bordered="false">
+                        <template #icon>
+                            <n-icon>
+                                <ios-add-circle></ios-add-circle>
+                            </n-icon>
+                        </template>
+                    </n-button>
+                </template>
+                <span>新建</span>
+            </n-tooltip>
+            <n-tooltip trigger="hover">
+                <template #trigger>
+                    <n-button @click="clickShareRef" :bordered="false">
+                        <template #icon>
+                            <n-icon>
+                                <ios-share-alt></ios-share-alt>
+                            </n-icon>
+                        </template>
+                    </n-button>
+                </template>
+                <span>分享</span>
+            </n-tooltip>
+        </div>
     </div>
 </template>
 
 <script setup>
 import { defineComponent, ref, reactive } from 'vue'
-import { NIcon, NButton } from 'naive-ui'
-import { IosAddCircle } from '@vicons/ionicons4'
+import { NIcon, NButton, NTooltip } from 'naive-ui'
+import { IosAddCircle, IosShareAlt } from '@vicons/ionicons4'
 import { DoubleNumber } from '/src/libs/number';
 // emit
 const emit = defineEmits(['show'])
 // click
-const clickRef = () => {
+const clickAddRef = () => {
     emit('show', true)
+}
+const clickShareRef = () => {
+    emit('share', true)
 }
 
 const date = new Date();
