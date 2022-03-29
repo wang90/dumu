@@ -5,7 +5,9 @@
         <n-dialog-provider>        
         <n-layout position="absolute">
             <n-layout-header bordered position="absolute" style="height: 64px; padding: 24px;">
-                <m-header @show="clickModelRef"></m-header>
+                <m-header 
+                    @show="clickModelRef"
+                    @share="clickShareRef"></m-header>
             </n-layout-header>
             <n-layout has-sider position="absolute" style="top: 64px; bottom: 64px;">
                 <n-layout-sider
@@ -38,7 +40,8 @@
 </template>
 
 <script setup>
-    import { defineComponent, ref, reactive } from 'vue'
+    import { defineComponent, ref, reactive } from 'vue';
+    import exportAnalysisHooks from '/src/libs/create-file';
     import { 
         NSpace, NConfigProvider, NIcon, NButton,
         NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NLayoutSider, 
@@ -128,6 +131,15 @@
     const showModal = ref(false)
     const clickModelRef = () => {
         showModal.value = true
+    }
+    const clickShareRef = () => {
+        const __list = storage.getStorageSync( __note_key ) || []
+        exportAnalysisHooks( JSON.stringify(
+            {
+                name: 'Location Note App',
+                date: new Date(),
+                data: __list
+            }, null, 2 ));
     }
 </script>
 <style>
