@@ -7,6 +7,7 @@
             <n-layout-header bordered position="absolute" style="height: 64px; padding: 24px;">
                 <m-header 
                     @show="clickModelRef"
+                    @create="clickCreateRef"
                     @share="clickShareRef"></m-header>
             </n-layout-header>
             <n-layout has-sider position="absolute" style="top: 64px; bottom: 64px;">
@@ -34,6 +35,7 @@
             </n-layout-footer>
         </n-layout>
         <add-model v-model:show="showModal" @addTask="setItemRef"></add-model>
+        <import-data v-model:show="showImport" @updataTask="setReloadRef"></import-data>
         </n-dialog-provider>
         </n-message-provider>
     </n-config-provider>
@@ -50,6 +52,7 @@
     // components
     import TaskList from './components/TaskList.vue'
     import AddModel from './components/AddModel.vue'
+    import ImportData from './components/ImportData.vue'
     import MFooter from './components/MFooter.vue'
     import MHeader from './components/MHeader.vue'
     import MSider from './components/MSider.vue'
@@ -72,7 +75,6 @@
 
     // default sldier collapesed;
     const __collapsed = storage.getStorageSync( __slider_key );
-    console.log(__collapsed)
     const collapsed = ref( __collapsed );
     const updateCollapsed = (e) => {
         collapsed.value = !collapsed.value;
@@ -126,9 +128,13 @@
             }
         });
     }
+    const setReloadRef = ( ) => {
+        console.log('setReloadRef')
+    }
 
     // 添加信息部分
-    const showModal = ref(false)
+    const showModal = ref(false);
+    const showImport = ref(false);
     const clickModelRef = () => {
         showModal.value = true
     }
@@ -142,6 +148,11 @@
                 data: __list
             }, null, 2 ), `${ date }-导出文件`);
     }
+    const clickCreateRef = () => {
+        console.log('clickCreateRef')
+        showImport.value = true;
+    }
+
 </script>
 <style>
 #app {

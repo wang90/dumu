@@ -9,7 +9,7 @@
             <n-empty description="列表空空">
                 <template #extra>
                     <n-button size="small"  
-                    @click="createItemRef">去添加</n-button>
+                        @click="createItemRef">去添加</n-button>
                 </template>
             </n-empty>
         </template>
