@@ -1,6 +1,6 @@
-const exportAnalysisHooks = ( text ) => {
+const exportAnalysisHooks = ( text:string, filename:string ) => {
     const blob = new Blob([text], { type: 'application/json' })
-      const fileName = '本地文件'
+      const fileName = filename || '本地文件';
       if ('download' in document.createElement('a')) {
         // 非IE下载
         const elink = document.createElement('a')

@@ -27,7 +27,7 @@
                         </template>
                     </n-button>
                 </template>
-                <span>分享</span>
+                <span>导出</span>
             </n-tooltip>
         </div>
     </div>
@@ -35,9 +35,12 @@
 
 <script setup>
 import { defineComponent, ref, reactive } from 'vue'
-import { NIcon, NButton, NTooltip } from 'naive-ui'
+import { NIcon, NButton, NTooltip, useDialog } from 'naive-ui'
 import { IosAddCircle, IosShareAlt } from '@vicons/ionicons4'
 import { DoubleNumber } from '/src/libs/number';
+
+const dialog = useDialog();
+
 // emit
 const emit = defineEmits(['show'])
 // click
@@ -45,13 +48,25 @@ const clickAddRef = () => {
     emit('show', true)
 }
 const clickShareRef = () => {
-    emit('share', true)
+
+    dialog.success({
+        title: '友情提示',
+        content: '导出文件可能会几秒钟时间，请耐心等待。',
+        positiveText: '确定',
+        negativeText: '放弃',
+        maskClosable: false,
+        onPositiveClick: () => {
+              emit('share', true);
+        },
+        onNegativeClick: () => {},
+    })
 }
 
 const date = new Date();
 const __weeks = ['日','一','二','三','四','五','六']
 const datetime = ref(` ${ date.getFullYear() } 年 ${ date.getMonth() + 1 } 月 ${ date.getDate() }日 星期${ __weeks[ date.getDay() ]} `)
 const timestamp = ref(null);
+
 setInterval(() => {
     const __date = new Date();
     timestamp.value = `${ DoubleNumber( __date.getHours()) }:${ DoubleNumber( __date.getMinutes()) }`;

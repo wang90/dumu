@@ -133,13 +133,14 @@
         showModal.value = true
     }
     const clickShareRef = () => {
-        const __list = storage.getStorageSync( __note_key ) || []
+        const __list = storage.getStorageSync( __note_key ) || [];
+        const date = new Date();
         exportAnalysisHooks( JSON.stringify(
             {
                 name: 'Location Note App',
-                date: new Date(),
+                date: date,
                 data: __list
-            }, null, 2 ));
+            }, null, 2 ), `${ date }-导出文件`);
     }
 </script>
 <style>
