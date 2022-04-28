@@ -1,6 +1,6 @@
 <template>
-    
-    <n-config-provider :theme="theme">
+
+    <n-config-provider :theme="theme" :hljs="hljs">
         <n-message-provider>
         <n-dialog-provider>        
         <n-layout position="absolute">
@@ -27,7 +27,8 @@
                         :list="list"
                         @create="clickModelRef"
                         @saveTask="saveTaskRef"
-                        @delTask="delItemRef"></task-list>
+                        @delTask="delItemRef"
+                        @importTask="importTaskRef"></task-list>
                 </n-layout-content>
             </n-layout>
             <n-layout-footer position="absolute" bordered style="height: 64px; padding: 24px;">
@@ -59,7 +60,12 @@
     // config
     import { darkTheme } from 'naive-ui'
     import { useStorage } from 'vue3-storage'
-    import { NOTE_KEY, SLIDER_KEY } from './config/index'
+    import { NOTE_KEY, SLIDER_KEY } from './config/index';
+
+    import hljs from 'highlight.js/lib/core'
+    import javascript from 'highlight.js/lib/languages/javascript'
+
+    hljs.registerLanguage('javascript', javascript)
 
     // bind storage
     const storage = useStorage()
@@ -128,8 +134,29 @@
             }
         });
     }
-    const setReloadRef = ( ) => {
-        console.log('setReloadRef')
+
+    const setReloadRef = ( e) => {
+        const { value } = e;
+        const __value = JSON.parse(value).data; 
+        list.splice(0,list.length)
+        for ( let i = 0 ; i < __value.length ; i ++ ) {
+            const __item = __value[i];
+            list.push(__item)
+        }
+        storage.setStorage({
+            key: __note_key,
+            data: __value,
+            success: ( callback ) => {
+                console.log( callback.errMsg )
+            },
+            fail: ( err ) => {
+                console.log(err)
+            }
+        })
+    }
+
+    const importTaskRef = () => {
+        clickCreateRef();
     }
 
     // 添加信息部分
@@ -149,7 +176,6 @@
             }, null, 2 ), `${ date }-导出文件`);
     }
     const clickCreateRef = () => {
-        console.log('clickCreateRef')
         showImport.value = true;
     }
 

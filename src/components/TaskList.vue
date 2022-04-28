@@ -10,6 +10,8 @@
                 <template #extra>
                     <n-button size="small"  
                         @click="createItemRef">去添加</n-button>
+                    <n-button size="small"  
+                        @click="importItemRef">去导入</n-button>
                 </template>
             </n-empty>
         </template>
@@ -25,7 +27,7 @@ import LinkBtn from '/src/components/LinkBtn.vue'
 import DelBtn from '/src/components/DelBtn.vue'
 import SaveBtn from '/src/components/SaveBtn.vue'
 // emit
-const emit = defineEmits([ 'delTask', 'create', 'saveTask' ])  // 声明触发事件 childClick
+const emit = defineEmits([ 'delTask', 'create', 'saveTask','importTask' ])  // 声明触发事件 childClick
 // props
 const props = defineProps({ list: Array })
 // click
@@ -41,6 +43,9 @@ const saveItemRef = ( index ) => {
         index: index,
         value: __item,
     })
+}
+const importItemRef = () => {
+    emit('importTask', true);
 }
 // var
 const pagination = ref(false);

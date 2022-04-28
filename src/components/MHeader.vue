@@ -62,7 +62,7 @@ const clickShareRef = () => {
     dialog.success({
         title: '友情提示',
         content: '导出文件可能会几秒钟时间，请耐心等待。',
-        positiveText: '确定',
+        positiveText: '我知道了',
         negativeText: '放弃',
         maskClosable: false,
         onPositiveClick: () => {
