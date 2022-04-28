@@ -14,7 +14,8 @@
 - <del>task list</del>
 - <del>task 创建 & 编辑 & 删除</del>
 - <del>本地存储</del>
-- json 导入导出
+- <del>时间展示</del>
+- <del>json 导入导出</del>
 - task 标签区分 & 筛选
 - 标签管理创建、修改、删除
 - 部分数据类型校验

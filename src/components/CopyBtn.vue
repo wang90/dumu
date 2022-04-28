@@ -31,9 +31,6 @@ const clickRef = () => {
         }
     })
 }
-
-
-
 </script>
 <style scoped>
 .copy-btn {
