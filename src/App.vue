@@ -1,43 +1,45 @@
 <template>
-
     <n-config-provider :theme="theme" :hljs="hljs">
         <n-message-provider>
-        <n-dialog-provider>        
-        <n-layout position="absolute">
-            <n-layout-header bordered position="absolute" style="height: 64px; padding: 24px;">
-                <m-header 
-                    @show="clickModelRef"
-                    @create="clickCreateRef"
-                    @share="clickShareRef"></m-header>
-            </n-layout-header>
-            <n-layout has-sider position="absolute" style="top: 64px; bottom: 64px;">
-                <n-layout-sider
-                    collapse-mode="width"
-                    collapsed-width="5"
-                    width="120"
-                    show-trigger="arrow-circle"
-                    content-style="padding: 24px;"
-                    :collapsed="collapsed"
-                    @click="updateCollapsed"
-                    bordered>
-                    <m-sider></m-sider>
-                </n-layout-sider>
-                <n-layout-content>
-                    <task-list 
-                        :list="list"
-                        @create="clickModelRef"
-                        @saveTask="saveTaskRef"
-                        @delTask="delItemRef"
-                        @importTask="importTaskRef"></task-list>
-                </n-layout-content>
-            </n-layout>
-            <n-layout-footer position="absolute" bordered style="height: 64px; padding: 24px;">
-               <m-footer></m-footer>
-            </n-layout-footer>
-        </n-layout>
-        <add-model v-model:show="showModal" @addTask="setItemRef"></add-model>
-        <import-data v-model:show="showImport" @updataTask="setReloadRef"></import-data>
-        </n-dialog-provider>
+            <n-dialog-provider>        
+                <n-layout position="absolute">
+                    <n-layout-header bordered position="absolute" style="height: 64px; padding: 24px;">
+                        <m-header 
+                            @show="clickModelRef"
+                            @create="clickCreateRef"
+                            @share="clickShareRef"
+                            @tags="clickTagsRef"></m-header>
+                    </n-layout-header>
+                    <n-layout has-sider position="absolute" style="top: 64px; bottom: 64px;">
+                        <n-layout-sider
+                            collapse-mode="width"
+                            collapsed-width="5"
+                            width="120"
+                            show-trigger="arrow-circle"
+                            content-style="padding: 24px;"
+                            :collapsed="collapsed"
+                            @click="updateCollapsed"
+                            bordered>
+                            <m-sider></m-sider>
+                        </n-layout-sider>
+                        <n-layout-content>
+                            <task-list 
+                                :list="list"
+                                @create="clickModelRef"
+                                @saveTask="saveTaskRef"
+                                @delTask="delItemRef"
+                                @importTask="importTaskRef"></task-list>
+                        </n-layout-content>
+                    </n-layout>
+                    <n-layout-footer position="absolute" bordered style="height: 64px; padding: 24px;">
+                        <m-footer></m-footer>
+                    </n-layout-footer>
+                </n-layout>
+                <n-back-top :right="100" />
+                <add-model v-model:show="showModal" @addTask="setItemRef"></add-model>
+                <import-data v-model:show="showImport" @updataTask="setReloadRef"></import-data>
+                <tags-admin v-model:show="tagsAdmin"></tags-admin>
+            </n-dialog-provider>
         </n-message-provider>
     </n-config-provider>
 </template>
@@ -46,7 +48,7 @@
     import { defineComponent, ref, reactive } from 'vue';
     import exportAnalysisHooks from '/src/libs/create-file';
     import { 
-        NSpace, NConfigProvider, NIcon, NButton,
+        NSpace, NConfigProvider, NIcon, NButton, NBackTop,
         NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NLayoutSider, 
         NDialogProvider,NMessageProvider,useMessage,
     } from 'naive-ui'
@@ -57,6 +59,7 @@
     import MFooter from './components/MFooter.vue'
     import MHeader from './components/MHeader.vue'
     import MSider from './components/MSider.vue'
+    import TagsAdmin from './components/TagsAdmin.vue';
     // config
     import { darkTheme } from 'naive-ui'
     import { useStorage } from 'vue3-storage'
@@ -178,6 +181,14 @@
     const clickCreateRef = () => {
         showImport.value = true;
     }
+
+    const tagsAdmin = ref(false);
+    // 标签管理部分
+    const clickTagsRef = () =>  {
+        tagsAdmin.value = true;
+        console.log('tagsAdmin')
+    }
+      
 
 </script>
 <style>

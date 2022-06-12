@@ -3,6 +3,20 @@
         <div>
             <span>{{ datetime }}</span>
             <span>{{ timestamp }}</span>
+            <span>
+                <n-tooltip trigger="hover">
+                    <template #trigger>
+                        <n-button @click="clickTagsAdmin" :bordered="false">
+                            <template #icon>
+                                <n-icon>
+                                    <ios-add-circle></ios-add-circle>
+                                </n-icon>
+                            </template>
+                        </n-button>
+                    </template>
+                    <span>标签管理</span>
+                </n-tooltip>
+            </span>
         </div>
         <div>
             <n-tooltip trigger="hover">
@@ -53,7 +67,7 @@ import { DoubleNumber } from '/src/libs/number';
 
 const dialog = useDialog();
 // emit
-const emit = defineEmits(['show'])
+const emit = defineEmits(['show','tags'])
 // click
 const clickAddRef = () => {
     emit('show', true)
@@ -86,9 +100,15 @@ const clickCreateRef = () => {
     })
 }
 
+
+const clickTagsAdmin = () => {
+    console.log( 'tags ')
+    emit('tags', true)
+} 
+
 const date = new Date();
 const __weeks = ['日','一','二','三','四','五','六']
-const datetime = ref(` ${ date.getFullYear() } 年 ${ date.getMonth() + 1 } 月 ${ date.getDate() }日 星期${ __weeks[ date.getDay() ]} `)
+const datetime = ref(` ${ date.getFullYear() } 年 ${ date.getMonth() + 1 } 月 ${ date.getDate() } 日 星期${ __weeks[ date.getDay() ]} `)
 const timestamp = ref(null);
 
 setInterval(() => {

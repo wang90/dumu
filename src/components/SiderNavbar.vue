@@ -5,5 +5,5 @@ import { NButton, NList, NListItem, NThing, NResult  } from 'naive-ui'
 </script>
 
 <template>
-   
+   NList
 </template>
