@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { Comman } from '../core/comman-type'
 import { CommanList } from '../core/index';
 
 
@@ -25,9 +24,6 @@ export const CommanStore = defineStore('common', {
             } else {
                 this.add( '', 'text');
             }
-           
-
-            
         },
         add( comman: string, type: string ) {
             this.list.push( {
@@ -51,7 +47,6 @@ export const CommanStore = defineStore('common', {
                     date: new Date(),
                 })
             }
-            
         },
         clear() {
             this.list = [];

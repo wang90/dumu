@@ -1,5 +1,6 @@
 import { CommandType } from '../comman-type';
 import { defineAsyncComponent } from 'vue';
+import { UseInfoStore } from '../../stores/UserInfoStore';
 /**
  * 帮助命令
  */
@@ -16,7 +17,8 @@ const welcomCommand: CommandType = {
     options: [],
     collapsible: true,
     action( options, terminal, parentCommand ): void {
-        terminal.add( '欢迎观临 dumu terminal', 'text');
+        const name = UseInfoStore().host;
+        terminal.add( '欢迎观临 dumu terminal: ' + name, 'text');
     },
 };
 
