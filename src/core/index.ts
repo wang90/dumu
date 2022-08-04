@@ -8,6 +8,7 @@ import backgroundCommand from './commans/background';
 import lsCommand from './commans/ls';
 import userCommand from './commans/user';
 import searchCommand from './commans/search';
+import informationAdminCommand from './commans/information-admin'
 
 export const CommanList   = {};
 
@@ -21,6 +22,7 @@ setCommon( backgroundCommand )
 setCommon( lsCommand )
 setCommon( userCommand )
 setCommon( searchCommand )
+setCommon( informationAdminCommand )
 
 function setCommon ( comman ) {
     const { alias = [], func = ''} =  comman;

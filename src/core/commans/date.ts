@@ -1,6 +1,6 @@
 import { CommandType } from '../comman-type';
 /**
- * 帮助命令
+ * 日期命令
  */
 const dateCommand: CommandType = {
     func: 'date',

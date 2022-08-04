@@ -1,5 +1,5 @@
 import { CommandType } from '../comman-type';
-import { defineAsyncComponent } from 'vue';
+
 /**
  * 查看历史命令
  */
@@ -11,11 +11,9 @@ const historyCommand: CommandType = {
     collapsible: true,
     action( options, terminal ): void {
         const list = terminal.history;
-        console.log( list );
         for ( let i = 0 ; i < list.length ; i ++ ) {
-            const { index , comman } = list[i]
             terminal.add(
-                `${ index } ${ comman }`,
+                `${ i + 1 } ${ list[i] }`,
                 'table',
             )
         }

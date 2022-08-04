@@ -1,6 +1,6 @@
 import { CommandType } from '../comman-type';
 /**
- * 帮助命令
+ * 清空命令
  */
 const clearCommand: CommandType = {
     func: 'clear',

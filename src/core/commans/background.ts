@@ -1,6 +1,6 @@
 import { CommandType } from '../comman-type';
 /**
- * 帮助命令
+ * 背景命令
  */
 const backgroundCommand: CommandType = {
     func: 'background',

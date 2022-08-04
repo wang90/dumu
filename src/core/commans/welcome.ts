@@ -2,7 +2,7 @@ import { CommandType } from '../comman-type';
 import { defineAsyncComponent } from 'vue';
 import { UseInfoStore } from '../../stores/UserInfoStore';
 /**
- * 帮助命令
+ * 欢迎命令
  */
 const welcomCommand: CommandType = {
     func: 'welcome',

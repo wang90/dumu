@@ -1,7 +1,7 @@
 import { CommandType } from '../comman-type';
 import { UseInfoStore } from '../../stores/UserInfoStore';
 /**
- * 帮助命令
+ * 用户命令
  */
 const userCommand: CommandType = {
     func: 'user',

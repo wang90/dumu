@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
 import { CommanList } from '../core/index';
-
+import HistoryList from '../libs/history-list';
+const history = new HistoryList();
 
 export const CommanStore = defineStore('common', {
     state: () => {
         return { 
             list: [],
-            history: [],
+            history: history.list,
         }
     },
     actions: {
@@ -34,19 +35,7 @@ export const CommanStore = defineStore('common', {
             });
         },
         addHistory( comman: string ) {
-            let lastComman = '';
-            if ( this.history.length > 0 ) {
-                const __comman = this.history[this.history.length - 1 ];
-                lastComman = __comman['comman'];
-            }
-            if ( lastComman !== comman) {
-                this.history.push({
-                    comman: comman,
-                    id: 1,
-                    index: this.history.length + 1,
-                    date: new Date(),
-                })
-            }
+            this.history = history.add( comman )
         },
         clear() {
             this.list = [];
