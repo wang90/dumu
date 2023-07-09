@@ -12,10 +12,11 @@ export const CommanStore = defineStore('common', {
     },
     actions: {
         input( comman: string ) {
+            const __comman = comman.split(' ').filter( v => v);
+            console.log(__comman)
             this.add( comman, 'common' );
             this.addHistory( comman );
             if ( comman ) {
-                const __comman = comman.split(' ').filter( v => v);
                 if ( CommanList[__comman[0]]) {
                     const { action } = CommanList[__comman[0]];
                     action( __comman, this )
