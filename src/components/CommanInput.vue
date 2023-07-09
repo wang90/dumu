@@ -3,7 +3,7 @@
         <UserName></UserName>
         <input class="common-input comman-text" 
             type="text"
-            ref="input"
+            ref="inputRef"
             @keydown.enter="entry"
             @input="input" 
             v-model="value" />
@@ -11,11 +11,12 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { InputHTMLAttributes, reactive, ref } from 'vue';
 import UserName from './UserName.vue';
 import { CommanStore } from '../stores/CommanStore';
 const CommonList = CommanStore();
-const value = ref();
+const value = ref('');
+const inputRef:InputHTMLAttributes = ref(null);
 const entry = () => {
     let inputText = value.value;
     console.log( inputText );
@@ -25,6 +26,13 @@ const entry = () => {
 const input = () => {
     // console.log( value.value);
 }
+const handleFocus = () => {
+    inputRef.value.focus();
+}
+
+defineExpose({
+    handleFocus,
+})
 
 
 </script>
