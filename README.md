@@ -1,34 +1,43 @@
-# 汪财工作台
+# Dumu
 
-## 为什么要做这个东东？
-- 工作&生活中有好多的账号，我存在本地的记事本上，因为不能存网盘，每次打开会如果不注意可能会删除之前的记录，复制起来也不是很方便
-- 平时都是用浏览器，基本上文件管理都在浏览器文件夹，使用起来需要查找不能分类
-- 想给自己一个好心情
+一个运行在 macOS 的本地桌面应用，用于离线管理账号和密码。
 
-## 基本原则
-所有数据均为离线使用
+## 当前架构
+
+- 桌面壳：Electron
+- 前端：React + Vite
+- 本地数据库：SQLite（`better-sqlite3`）
+- 数据位置：`~/Library/Application Support/<app-name>/dumu.db`
 
 ## 功能
 
-### 基本功能
-- <del>task list</del>
-- <del>task 创建 & 编辑 & 删除</del>
-- <del>本地存储</del>
-- <del>时间展示</del>
-- <del>json 导入导出</del>
-- task 标签区分 & 筛选
-- 标签管理创建、修改、删除
-- 部分数据类型校验
-### 未来打算
-- 日历
-- 天气
-- 皮肤
+- 账号记录的新增、编辑、删除
+- 本地搜索（标题/账号/备注）
+- 一键复制账号和密码
+- JSON 导入/导出
+- 全离线运行，不依赖远程服务
 
-## 应用相关
-### 技术架构
-vite + vue3 + naive-ui
-### 使用方法
-`````
-npm install 
+## 本地开发
+
+```bash
+npm install
 npm run dev
-`````
+```
+
+> 在部分网络环境下安装 `electron` 可能超时，可使用：
+>
+> ```bash
+> ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/" npm install
+> ```
+
+## 构建前端资源
+
+```bash
+npm run build
+```
+
+## 项目目录（核心）
+
+- `electron/main.js`：桌面主进程 + SQLite 初始化 + IPC 接口
+- `electron/preload.js`：渲染进程可调用的安全 API
+- `src/App.jsx`：React 页面（账号管理 UI）
