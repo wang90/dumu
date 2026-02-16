@@ -79,6 +79,15 @@ body {
   flex-wrap: wrap;
 }
 
+.chrome-import-btn {
+  height: 30px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
 .theme-mode-group {
   display: inline-flex;
   align-items: center;

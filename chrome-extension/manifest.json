@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "dumu 快速保存",
+  "version": "0.1.0",
+  "description": "将当前页面账号密码快速保存到 dumu",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["http://127.0.0.1:32123/*"],
+  "action": {
+    "default_title": "保存到 dumu",
+    "default_popup": "popup.html"
+  }
+}

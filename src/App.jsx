@@ -255,6 +255,14 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (typeof window.dumuApi?.onAccountsRefresh !== "function") return undefined;
+    const unsubscribe = window.dumuApi.onAccountsRefresh(() => {
+      loadAccounts();
+    });
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
     window.localStorage.setItem(THEME_STORAGE_KEY, themeMode);
 
     const media = window.matchMedia("(prefers-color-scheme: dark)");
@@ -460,6 +468,25 @@ function App() {
     }
   }
 
+  async function importChromeCsv() {
+    try {
+      if (typeof window.dumuApi?.importChromeCsv !== "function") {
+        window.alert("当前版本暂不支持该功能，请重启应用后再试。");
+        return;
+      }
+      const result = await window.dumuApi.importChromeCsv();
+      if (!result?.canceled) {
+        await loadAccounts();
+        const skipped = Number(result.skipped || 0);
+        const skipText = skipped > 0 ? `，跳过 ${skipped} 条不完整记录` : "";
+        window.alert(`Chrome CSV 导入完成，共 ${result.count} 条${skipText}`);
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      window.alert(`获取 Chrome 密码失败：${message}`);
+    }
+  }
+
   async function copyText(text) {
     await navigator.clipboard.writeText(text || "");
     window.alert("已复制");
@@ -587,6 +614,15 @@ function App() {
         <div className="header-actions">
           <button
             type="button"
+            className="secondary-btn chrome-import-btn"
+            onClick={importChromeCsv}
+            title="从 Chrome 导出的 CSV 获取密码"
+            aria-label="获取 Chrome 密码"
+          >
+            获取 Chrome 密码
+          </button>
+          <button
+            type="button"
             className="theme-mode-btn secondary-btn icon-with-tip"
             onClick={openNewFormWithConfirm}
             data-tip="新建"
@@ -618,6 +654,16 @@ function App() {
             </button>
             {showSettingsMenu && (
               <div className="settings-dropdown">
+                <button
+                  type="button"
+                  className="settings-item"
+                  onClick={() => {
+                    setShowSettingsMenu(false);
+                    importChromeCsv();
+                  }}
+                >
+                  导入 Chrome CSV
+                </button>
                 <button
                   type="button"
                   className="settings-item"
