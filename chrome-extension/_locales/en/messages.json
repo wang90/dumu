@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "dumu Quick Save"
+  },
+  "extDescription": {
+    "message": "Quickly save the current page account and password to dumu."
+  },
+  "actionTitle": {
+    "message": "Save to dumu"
+  }
+}

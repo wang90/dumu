@@ -10,7 +10,9 @@
     "build:web": "vite build",
     "build": "npm run build:web",
     "preview": "vite preview",
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "npm run build:web && electron-builder --mac",
+    "dist:dir": "npm run build:web && electron-builder --mac --dir"
   },
   "dependencies": {
     "better-sqlite3": "^11.8.1",
@@ -21,9 +23,30 @@
     "@vitejs/plugin-react": "^4.4.1",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
-    "electron-rebuild": "^3.2.9",
     "electron": "^34.0.2",
+    "electron-builder": "^26.7.0",
+    "electron-rebuild": "^3.2.9",
     "vite": "^6.1.1",
     "wait-on": "^8.0.3"
+  },
+  "build": {
+    "appId": "com.dumu.app",
+    "productName": "dumu",
+    "files": [
+      "dist/**",
+      "electron/**",
+      "package.json"
+    ],
+    "protocols": [
+      {
+        "name": "dumu",
+        "schemes": [
+          "dumu"
+        ]
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.productivity"
+    }
   }
 }

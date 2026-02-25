@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "dumu 快速保存"
+  },
+  "extDescription": {
+    "message": "将当前页面账号密码快速保存到 dumu。"
+  },
+  "actionTitle": {
+    "message": "保存到 dumu"
+  }
+}

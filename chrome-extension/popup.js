@@ -130,8 +130,10 @@ async function wakeDumu() {
         lastError = error instanceof Error ? error.message : String(error);
       }
     }
-    chrome.tabs.create({ url: "dumu://focus" });
-    setStatus("已尝试通过系统协议唤起 dumu。", "ok");
+    setStatus(
+      `唤起失败：${lastError || "无法连接到 dumu 本地服务"}。请先启动 dumu（需要它监听 127.0.0.1:32123）。`,
+      "error"
+    );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     setStatus(`唤起失败：${message}。请先启动 dumu。`, "error");

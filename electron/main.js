@@ -12,6 +12,32 @@ const QUICK_SAVE_HOST = "127.0.0.1";
 const QUICK_SAVE_PORT = 32123;
 let pendingDeepLink = null;
 
+const gotSingleInstanceLock = app.requestSingleInstanceLock();
+
+function extractDeepLinkFromArgv(argv) {
+  if (!Array.isArray(argv)) return null;
+  const hit = argv.find((arg) => String(arg || "").startsWith("dumu://"));
+  return hit || null;
+}
+
+if (!gotSingleInstanceLock) {
+  app.quit();
+} else {
+  pendingDeepLink = extractDeepLinkFromArgv(process.argv);
+  app.on("second-instance", (_, argv) => {
+    const deepLink = extractDeepLinkFromArgv(argv);
+    if (deepLink) {
+      if (app.isReady()) {
+        handleDeepLink(deepLink);
+      } else {
+        pendingDeepLink = deepLink;
+      }
+      return;
+    }
+    focusMainWindow();
+  });
+}
+
 function normalizeHeader(value) {
   return String(value || "")
     .trim()
@@ -219,13 +245,14 @@ function startQuickSaveServer() {
 
 function registerProtocolClient() {
   const protocol = "dumu";
-  if (process.defaultApp && process.argv.length >= 2) {
-    app.setAsDefaultProtocolClient(protocol, process.execPath, [
+  const ok = process.defaultApp && process.argv.length >= 2
+    ? app.setAsDefaultProtocolClient(protocol, process.execPath, [
       path.resolve(process.argv[1]),
-    ]);
-    return;
+    ])
+    : app.setAsDefaultProtocolClient(protocol);
+  if (!ok) {
+    console.warn("[dumu] setAsDefaultProtocolClient failed for dumu://");
   }
-  app.setAsDefaultProtocolClient(protocol);
 }
 
 function handleDeepLink(url) {
