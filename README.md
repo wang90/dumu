@@ -4,6 +4,11 @@
 
 A local desktop app for macOS to manage accounts and passwords fully offline.
 
+## Documentation (Web Website)
+
+- English docs: `docs/README.md`
+- Chinese docs: `docs/README.zh-CN.md`
+
 ## Tech Stack
 
 - Desktop shell: Electron

@@ -4,6 +4,11 @@
 
 一个运行在 macOS 的本地桌面应用，用于离线管理账号和密码。
 
+## 文档（Web 官网）
+
+- 英文文档：`docs/README.md`
+- 中文文档：`docs/README.zh-CN.md`
+
 ## 当前架构
 
 - 桌面壳：Electron
